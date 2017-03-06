@@ -1,0 +1,17 @@
+#cookie-banner {
+    background-color: rgba(0,0,0,0.9);
+    color: #FFF;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    height: 10%;
+    z-index: 10;
+    padding: 1%;
+}
+#cookie-banner a {
+    color: yellow;
+    font-weight: bold;
+}
+#cookie-banner button {
+    margin-left: 2%;
+}
