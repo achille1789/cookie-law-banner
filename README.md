@@ -20,4 +20,4 @@ __The script must run on a server otherwise the cookie is not set up__
 
 See an example here: http://codepen.io/vanni/pen/zZoxdY
 
-[MIT License](https://github.com/achille1789/cookie-law-banner/blob/master/LICENSE.md)
+[![License](https://img.shields.io/badge/License-MIT-yellowgreen.svg?style=flat-square)](https://github.com/achille1789/cookie-law-banner/blob/master/LICENSE.md)
