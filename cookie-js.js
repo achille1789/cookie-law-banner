@@ -1,15 +1,24 @@
 // Insert the message to display
 var message = "This website uses cookie, are you agree?";
-// Insert the Url with cookies description
+// Insert the Url with the page cookies description
 var coockieUrl = "cookie.html";
-// Insert number of days for the cookie life
+// Insert number of days until the cookie expires
 var cookieLife = 60;
-// Event that triggers checkCookie(), to active extra feature give a value to the parameters
-document.body.addEventListener("load", checkCookie(null, null));
+// Text of buttons
+var btnYes = "Yes, I agree";
+var btnNo = "No, give me more info";
+// Add banner to the top or bottom of the page
+var position = true;    // Default is bottom
+// To active extra feature give true
+var anchor = false;    // User accept when a link is clicked
+var scroll = false;    // User accept when the page is scrolled
 
-// This function checks if there is already the cookie/s and stores it/s name/s
-function getCookie(cname) {
-    var name = cname + "=";
+// Event that triggers the cookie banner
+document.body.addEventListener("load", checkCookie());
+
+// This function checks if the user has already accepted the cookies
+function getCookie() {
+    var name = "cookie_yes" + "=";
     var ca = document.cookie.split(';');
     for(var i = 0; i < ca.length; i++) {
         var c = ca[i];
@@ -19,23 +28,23 @@ function getCookie(cname) {
     return "";
 }
 
-// Check if cookie_yes exists, otherwise creates the banner
-function checkCookie(anchor, scroll) {
+// If cookie has not been accept, show banner
+function checkCookie() {
 
-    if (!getCookie("cookie_yes")) {
+    if (!getCookie()) {
 
         // Create button "Yes" with text
         var newbutton1 = document.createElement("button");
         newbutton1.setAttribute("id","yes");
         newbutton1.setAttribute("onclick","cookieYes()");
-        var textButton1 = document.createTextNode("Yes");
+        var textButton1 = document.createTextNode(btnYes);
         newbutton1.appendChild(textButton1);
 
         // Create button "More Info" with text
         var newbutton2 = document.createElement("button");
         newbutton2.setAttribute("id","no");
         newbutton2.setAttribute("onclick","cookieNo()");
-        var textButton2 = document.createTextNode("More Info");
+        var textButton2 = document.createTextNode(btnNo);
         newbutton2.appendChild(textButton2);
 
         // Create p with message
@@ -49,25 +58,33 @@ function checkCookie(anchor, scroll) {
         newp.appendChild(newbutton1);
         newp.appendChild(newbutton2);
         newdiv.appendChild(newp);
-        document.body.appendChild(newdiv);
+
+        if (position) {
+            document.body.appendChild(newdiv);
+            document.getElementById("cookie-banner").style.bottom = 0;
+            document.getElementById("cookie-banner").style.position = "fixed";
+        } else {
+            document.body.insertBefore(newdiv, document.body.childNodes[0]);
+            document.getElementById("cookie-banner").style.top = 0;
+        }
 
         // EXTRA FEATURES
         // Acceptance of cookie law with a click in every "a" tag
         if (anchor) {
             var a = document.getElementsByTagName("a");
             for(var i = 0; i < a.length; i++) {
-                a[i].setAttribute("onclick","cookieYes(cookieLife)");
+                a[i].setAttribute("onclick","cookieYes()");
             }
         }
         // Acceptance of cookie law with the scroll of the page
         if (scroll) {
-            document.body.setAttribute("onscroll","cookieYes(cookieLife)");
+            document.body.setAttribute("onscroll","cookieYes()");
         }
     }
 }
 
 // Function cookieYes() that installs the cookie
-function cookieYes(cookieLife) {
+function cookieYes() {
     var d = new Date();
     d.setTime(d.getTime() + (cookieLife * 24 * 60 * 60 * 1000));
     var expires = "expires=" + d.toUTCString();
